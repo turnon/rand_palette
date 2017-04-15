@@ -13,15 +13,20 @@ module RandPalette
              ScalarDesc.map{|c| [255, 0, c] }].flatten 1
 
   def self.random n, alpha: 1
-    picked = rand Palette.size
-    steps = Palette.size / n
+    raise RangeError, "No more than #{range} kinds od color" if n > range
+    picked = rand range
+    steps = range / n
     n.times.map do |t|
       picked = picked + steps
-      picked = picked - Palette.size if picked >= Palette.size
+      picked = picked - range if picked >= range
       picked
     end.map do |picked|
       RGBA.new(Palette[picked] + [alpha]).to_s
     end
+  end
+
+  def self.range
+    Palette.size
   end
 
   class RGBA
