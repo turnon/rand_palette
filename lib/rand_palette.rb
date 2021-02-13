@@ -13,7 +13,9 @@ module RandPalette
              ScalarDesc.map{|c| [255, 0, c] }].flatten 1
 
   def self.random n, alpha: 1
+    return [] if n <= 0
     raise RangeError, "No more than #{range} kinds od color" if n > range
+
     picked = rand range
     steps = range / n
     n.times.map do |t|
